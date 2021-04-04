@@ -1,0 +1,26 @@
+#margin {
+  margin-top: 5rem;
+}
+
+h1,
+h2,
+h3 {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+:link, :visited {
+  color: #1978c5;
+}
+
+code {
+  color: #1978c5;
+}
+
+img {
+  padding-top: 1em;
+  padding-bottom: 1em;
+  object-fit: contain;
+  width: 50%;
+  margin-left: 25%;
+}

@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CWE Modding Documentation: Fruit Modding</title>
+
+    <!-- Include Bootstrap - Just so that we have a basic framework to make things look pretty. -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <link href="styles.css" rel="stylesheet">    
+    <link rel="stylesheet" href="dark-mode-switch/dark-mode.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+   
+    <!-- Credit to coiff for the Dark Mode Switch https://github.com/coliff/dark-mode-switch -->
+
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-sm fixed-top bg-light">
+        <div class="container">
+        <span class="navbar-brand" href="#">Chao World Extended Modding Documentation</span>
+        <button class="navbar-toggler" data-target="#Main-Nav" data-toggle="collapse" aria-controls="Main-Nav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+                <div id="Main-Nav" class="collapse navbar-collapse">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html">Home </a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                              Topics
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                              <li><a class="dropdown-item" href="dllproject.html">Making a DLL Mod</a></li>
+                              <li><a class="dropdown-item" href="hatmodding.html">Hat Modding</a></li>
+                              <li><a class="dropdown-item active" href="fruitmodding.html"><b>Fruit Modding</b></a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <div class="form-check form-switch">
+                    <input id="darkSwitch" class="form-check-input" type="checkbox" >
+                    <label for="darkSwitch" class="form-control-label">Theme</label>
+                </div>
+                <script src="dark-mode-switch/dark-mode-switch.min.js"></script> 
+        </div>
+    </nav>
+
+    <div class="container">
+        
+        <div id="margin"></div>
+        <div class="row">
+            <div class="col-lg-auto">
+                <h1>Fruit Modding</h1>
+    
+                <h2 id="prereqs">Pre-requisites:</h2>
+            
+                <ul>
+                    <li>Have completed the <a href="dllproject.html">Making a DLL Project</a> section.</li>
+                    <li><a href="https://blender.org">The latest version of Blender</a></li>
+                    <ul><li><a href="https://github.com/Justin113D/BlenderSASupport">BlenderSASupport</a></li></ul>
+                    <li>Basic 3D theory/knowledge</li>
+                    <li>Basic C++ programming skills</li>
+                    <li><a href="https://github.com/sonicretro/sa_tools">SA Tools</a></li>
+                    <li>Chao World Extended (versions >8.3)</li>
+                    <li>patience</li>
+                </ul>
+            
+                <h2 id="modellingTexturing">Modelling and Texturing</h2>
+            
+                <h3>Modelling</h3>
+            
+                <p class="lead">Fruit mods allow you to feed your Chao tasty custom food, that give custom effects to your Chao as well.  We will create a model, assign the model to the black market, give the fruit a custom function, and set up the prices and effects of the fruit to the Chao.</p>
+            
+                <p>Open Blender, and create your fruit.  For example, I'll make a pear.  Follow standard 3D modelling practices while making the fruit, and don't worry too much about what polygons your fruit should be made out of.  The model will be auto-triangulated on export. There's a vertex limit of 32768, but try to work in the visual style of the game, since you would want the fruit to look consistent with the world you're in.</p>
+
+                <p>Delete the point light and the camera, otherwise your game may crash!</p>
+            
+                <img class="img-fluid" src="assets/Blender-FruitModel.png" alt="A model of a pear">
+            
+                <p>Once done, make sure your fruit is aligned at the origin of 0 on the X, Y, and Z axis.</p>
+
+                <img class="img-fluid" src="assets/Blender-XYZto0.png" alt="Make sure the orange dot - Origin is close to 0">
+            
+                <h3>Texturing</h3>
+            
+                <p>Select the fruit, go to the tools menu in the properties panel, and go to SA Tools->Update Materials.  This creates an SA2Shader node group that will allow us to texture preview the model inside Blender itself.  Make sure to select the material for you used for the model (or create one if you haven't) in material properties to see the fruit turn magenta.  This is normal since we have not textured the fruit yet.</p>
+            
+                <img class="img-fluid" src="assets/Blender-UpdateMaterials.png" alt="Click the Update Materials button">
+            
+                <p>Go to the Texture Paint tab, and click the "new" button on top. This will make a new texture for the model. Make the size at most 128x128 (recommended - going higher would allow for higher quality, but at the cost of performance and size of mod) and then assign the texture to the model.</p>
+            
+                <img class="img-fluid" src="assets/Blender-FruitAssignTexture.png" alt="Assigning the texture of the fruit">
+            
+                <p>In the texture assignment, go to the SA Tools settings and set your texture ID - texture ID should be 0 for your first fruit, and additional fruit or textures must increment the texture ID by 1 so that the model can be appropriately mapped</p>
+            
+                <img class="img-fluid" src="assets/Blender-SAToolsProperties.png" alt="Set the Texture ID to 0 for first fruits, increase by 1 thereafter">
+            
+                <p>Go to the UV editing tab, select all of your hat's vertices (A), and UV map it (either by pressing U, selecting Smart UV Project or by clicking UV, Smart UV Project)</p>
+            
+                <img class="img-fluid" src="assets/Blender-FruitUVProject.png" alt="Click UV, and Smart UV Project your fruit.">
+            
+                <p>Adjust the UVs as you would like. Once done, go to the UV editor pane on the left, and go to UV->Export UV Layout. This will allow you to export your UVs so that you can use an external application (like Photoshop) to UV paint your model. Below, you will see my re-arranged UVs for the pear I created. </p>
+            
+                <img class="img-fluid" src="assets/pear-uv.png" alt="The UVs of the pear">
+            
+                <p>Paint the fruit as you like, and save the fruit (as well as the texture). Once done, we can continue to the code section of the mod!  Export your model as an SA2MDL file and then close Blender.</p>
+                
+                <h2 id="basicCode">Basic Code</h2>
+
+                <p>Open your VS project folder and download and extract the archive for the API code <a href="https://github.com/NostalgiaNinja/DCFruits/archive/EasyRegisterFruit.zip">here</a> into the project folder.  This will include the base code, as well as any additional dependencies outside of the SA2 Programming code required to make the project complete. Add the Main.cpp file to your project and open it. There are a few things we will need to cover for fruit before we can add them to the Black Market themselves.</p>
+
+                <h3>Initialize the fruit ID</h3>
+                <pre><code>
+                    int ExampleFruitID;
+                </code></pre>
+
+                <p>This provides the fruit with an ID to the custom fruit API in CWE.</p>
+
+                <h3>Create a custom function for the fruit</h3>
+
+                <pre><code>
+                    void __cdecl CustomFruitFunc(ChaoData* data, ObjectMaster* fruit)
+                    {
+
+                    }
+                </code></pre>
+
+                <p>Note: This needs to be created for custom functionality, but if you don't add the function you can insert <code>NULL</code> in the Function parameter instead of using a CustomFruitFunc. NULLing the parameter means that only the stats will be given, and nothing else.</p>
+
+                <p>This is where the last bite of the Chao Fruit would change attributes, like personality, behavior, or emotions. You'll find the attributes in <code>data->data</code>. Be sure to manually clamp the values in these functions.  Use the <a href="https://github.com/Exant64/DCFruits/blob/master/main.cpp">DCFruits</a> source to see how clamping was done there. When the CWE API allows for it, this will update to functions that handle this for you.</p>
+
+                <h3>Create a stats struct instance</h3>
+
+                <pre><code>ChaoItemStats ExampleStats = { 0,0,0,0,0,0,0,0,0,0 }</code></pre>
+
+                <p>This creates the stats for the Chao, and divides the stats according to the bites the Chao takes. Note the comment next to the example code which tells you what the order of operations is.</p>
+
+                <h3>Add the CWE fruit</h3>
+
+                <p>Go to the CWELoad() function, and have a look at the following:</p>
+
+                <pre><code>	
+                    void CWELoad()
+                    {
+                        //Texture list - Change the name for making different custom textures.
+                        RegisterChaoTexlistLoad("examplefruit", &texlist_CUSTOMFRUIT);
+                
+                        //Register the fruit ID to the fruit list - should start at 34 before DCFruits gets initialized, or 36 after.
+                        ExampleFruitID = RegisterFruit("example.sa2mdl", 1000, 250, CustomFruitStats, CustomFruitFunc, "Example Fruit", "Example fruit description");
+                
+                        //give the fruit a chance to spawn, 50% is standard in DCFruits
+                        ItemChance ExampleFruitChance{ExampleFruitID, 50};
+                
+                        //Register the fruit
+                        RegisterBlackMarketGeneralFruit(&ExampleFruitChance);
+                    }
+                </code></pre>
+                
+                <p><code>RegisterChaoTexlistLoad</code> defines the name of your texture file (in this case it's examplefruit.pak, change it so it doesn't mess with any other fruit mods.)</p>
+
+                <p>the <code>RegisterFruit</code> function gives you access to register your fruit we made in the previous section.  You can add as many fruit as you like using this line of code, limited to 255 fruit.  Note that other fruit mods share this limit, and if you do reach the limit, the game will rash when trying to load one of the fruit in the Black Market.</p>
+
+                <p>the syntax for the <code>RegisterFruit</code> is as follows: <code>RegisterFruit("filename",buy price, sell price, the stats struct instance we created above, the custom function we created above, "Name of Fruit", "Description for Black Market");</code></p>
+
+                <p>Create an instance for ItemChance for your Fruit. This gives the fruit a chance to spawn in the Black Market.  50% is the default in DCFruits mod, so I usually go for that.</p>
+
+                <p>finally, choose where you want to register the fruit.  <code>RegisterBlackMarketGeneralFruit</code> places the fruit where the shaped fruit usually is, while <code>RegisterBlackMarketRareFruit</code> places the fruit where Hyper Fruit, Mint Candy, and mushrooms would spawn. Don't forget to assign the <b>address of</b> (& operator with the variable name) the chance of the fruit you are making, otherwise this will not work and throw an error on compile!</p>
+
+                <p>Drag and drop the ModelInfo.h and ModelInfo.cpp files into the "Source Files" folder in your Solution explorer. (These dependencies generally throw linker errors if not added this way for me, so let me know if this is an issue for you)</p>
+
+                <img class="img-fluid" src="assets/VS-DragDropDependencies.png" alt="Drag and drop the dependencies to your project folder">
+
+                <p>Click the build configuration dropdown and select "Release" and select from the solution platform "x86", then build your project by pressing F6 or going to "Build -> Build Project. If all goes well, the build should be completed and a "Release" folder should appear in your project folder with the project name DLL inside. </p>
+
+                <h2 id="textureFile">Making the texture file</h2>
+
+                <i>Note that screenshots come from the hats guide, but the same process applies here.</i>
+
+                <p>Close VS, and open SA Tools TextureEditor. Click the "add" button and add your fruit texture.</p>
+
+                <img class="img-fluid" src="assets/TextureEditor-Add.png" alt="Add button on the texture Editor">
+
+                <p>Select your fruit texture you added, and set the Global Index to something unique.  Anywhere around 150000 will be fine. </p>
+
+                <img class="img-fluid" src="assets/TextureEditor-GIDSet.png" alt="Set the Global ID to something unique">
+
+                <p>Save your fruit texture that you added as .PAK, as what you set your <code>RegisterChaoTexlistLoad</code> filename as. Save it somewhere accessible so you can place it in your mod soon.</p>
+
+                <img class="img-fluid" src="assets/TextureEditor-SaveAsPAK.png" alt="Save as, PAK">
+
+                <p>We are now done with the mod creation process. Let's package up the mod and get it ready for shipping.</p>
+
+                <h2 id="finalizing">Finalizing and Testing</h2>
+
+                <p>We're finally at the endgoal of this project.  This is usually where issues will get picked up, so we will test the mod as we go along finalizing the mod.</p>
+
+                <p>Add your DLL file from the "Release" folder to your mod project folder.</p>
+
+                <p>Inside your mod project folder, create a <code>gd_PC</code> folder, and inside the gd_PC folder, add a <code>PRS</code> folder. Copy your .PAK texture file from the last section to the PRS folder.</p>
+
+                <p>Open your mod.ini file and add the filename of your DLL file to the <code>DLLFile=</code> property we made in the DLL Project setup. Save and close the file.</p>
+
+                <p>Now, in your SA2 Modloader, find your mod and check it.  Make sure your mod is beneath Chao World Extended to work - Chao World Extended is a required prerequisite to this process, so it must be at the top of your list.</p>
+
+                <img class="img-fluid" src="assets/Modloader-SelectMod.png" alt="The mod selected is the example Chao Fruits mod">
+
+                <p>Click Save, and close the Modloader, then run Sonic Adventure 2.  Cycle your Black Market until you find the fruit.</p>
+
+                <img class="img-fluid" src="assets/CWE-BlackMarketFruit.jpg" alt="The Black Market Fruit as per example">
+
+                <p>Buy the fruit you made, and give it to a Chao to eat.  If everything was successful, the Chao would gain the stats from stats struct, as well as gain the attributes from your custom function (if you set it).</p>
+
+                <img class="img-fluid" src="assets/CWE-TestFruit.jpg" alt="Testing the Black Market Fruit">
+
+                <p>Make any adjustments that you want to make to your fruit by repeating the steps you don't feel happy with, rinse, wash and repeat.  You now know how to create yummy custom fruit for your Chao!</p>
+
+                <h2 id="troubleshooting">Troubleshooting</h2>
+
+                <p class="lead">This section involves a few troubleshooting steps for where issues may arise. A few errors may occur when making a custom hat, and you may get stuck for a while.</p>
+
+                <h3>My game crashes when I'm in the Black Market!</h3>
+
+             	<p>This is caused by three issues:</p>
+            	<ul>
+            		<li>Model issues - This is mainly caused by extra empties found in the SA2MDL model. This happens when your camera or point lamp has not been removed, causing your model to crash the game.  Remove the camera and point empties, export your SA2MDL and try again.</li>
+            		<li>Texture issues - If your texture file is not in the right location (gd_PC/PRS) then the game cannot find the file that it is looking for, throwing a "file not found" exception and crashing. Place your texture file in the right place, and try again</li>
+            		<li>Forgetting to delete the Chao Model after you are done with making the hat. Delete the Chao model hierarchy, save, and try again.</li>
+                </ul>
+                
+            	<h3>My texture doesn't look right!</h3>
+            	<p>Make sure your texture is correctly assigned to the model in Blender, and make sure that in TextureEditor your texture has a unique value in the Global Index field.</p>
+
+                <h3>My fruit crashes with other fruit mods!</h3>
+            	<p>You've somehow reached the shared Black Market limit of 255 items of the fruit type. Remove some mods and try again.</p>
+
+            </div>
+        </div>
+
+        <div id="margin"></div>
+    </div>
+</body>
+</html>

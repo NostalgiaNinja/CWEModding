@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CWE Modding Documentation</title>
+    
+    <!-- Include Bootstrap - Just so that we have a basic framework to make things look pretty. -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <link href="styles.css" rel="stylesheet">
+    <link rel="stylesheet" href="dark-mode-switch/dark-mode.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+   
+    <!-- Credit to coiff for the Dark Mode Switch https://github.com/coliff/dark-mode-switch -->
+
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-sm fixed-top bg-light">
+        <div class="container">
+        <span class="navbar-brand" href="#">Chao World Extended Modding Documentation</span>
+        <button class="navbar-toggler" data-target="#Main-Nav" data-toggle="collapse" aria-controls="Main-Nav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+                <div id="Main-Nav" class="collapse navbar-collapse">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#"><b>Home </b></a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                              Topics
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                              <li><a class="dropdown-item" href="dllproject.html">Making a DLL Mod</a></li>
+                              <li><a class="dropdown-item" href="hatmodding.html">Hat Modding</a></li>
+                              <li><a class="dropdown-item" href="fruitmodding.html">Fruit Modding</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <div class="form-check form-switch">
+                    <input id="darkSwitch" class="form-check-input" type="checkbox" >
+                    <label for="darkSwitch" class="form-control-label">Theme</label>
+                </div>
+                <script src="dark-mode-switch/dark-mode-switch.min.js"></script> 
+        </div>
+    </nav>
+
+    <div id="margin"></div>
+    <div class="container">
+
+        <div class="row">
+            <div class="col-xl">        
+                
+                <div class="alert alert-info alert-dismissible fade show" role="alert">
+                    Heads up! Version 1.1 is now out! This version comes with a new navbar for easy navigation around the documentation, as well as a simple cookie handler so that themes can be stored for ease of use.
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    This local webpage stores a small cookie that only handles the theme of the service. It will not store tracking information (because I respect GDPR).  Click the dismiss button on the right to dismiss this.
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+
+                <h1>Chao World Extended Modding Documentation</h1>
+    
+                <p class="lead" >Creating custom hats and fruit for Chao Gardens with Chao World Extended can be a long and complicated process, but this document intends to ease users into understanding the core concepts of how to mod using CWE's modding support functions.  While the documentation does go through all the groundwork to get you started, there will be some pre-requisites expected of you before going ahead.  Each section of this guide will provide a small subsection explaining the pre-requisites of what it will go through before starting the mod. </p>
+            
+                <h2>Categories:</h2>
+                <p>
+                    <ol>
+                        <h4><a href="dllproject.html">Making a DLL project</a></h3>
+                        <p>
+                            <ul>
+                                <li><a href="dllproject.html#prereqs">Pre-requisites</a></li>
+                                <li><a href="dllproject.html#modsetup_SA2ModLoader">Mod Setup method 1: SA2 Modloader</a></li>
+                                <li><a href="dllproject.html#modsetup_SATools">Mod Setup method 2: SA Tools</a></li>
+                                <li><a href="dllproject.html#modsetup_Manual">Mod Setup method 3: Manual Method</a></li>
+                                <li><a href="dllproject.html#VS-Project">Setting up the Visual Studio project</a></li>
+                                <li><a href="dllproject.html#modloader-includes">Setup Modloader includes</a></li>
+                            </ul>
+                        </p>
+                        <h4><a href="hatmodding.html">Hat Modding</a></h3>
+                        <p>
+                            <ul>
+                                <li><a href="hatmodding.html#prereqs">Pre-requisites</a></li>
+                                <li><a href="hatmodding.html#preparations">Preparations to make</a></li>
+                                <li><a href="hatmodding.html#modellingTexturing">Modelling and Texturing</a></li>
+                                <li><a href="hatmodding.html#basicCode">Basic code</a></li>
+                                <li><a href="hatmodding.html#textureFile">Making the texture file</a></li>
+                                <li><a href="hatmodding.html#finalizing">Finalizing and Testing</a></li>
+                                <li><a href="hatmodding.html#troubleshooting">Troubleshooting</a></li>
+                            </ul>
+                        </p>
+                        <h4><a href="fruitmodding.html">Fruit Modding</a></h3>
+                        <p>
+                            <ul>
+                                <li><a href="fruitmodding.html#prereqs">Pre-requisites</a></li>
+                                <li><a href="fruitmodding.html#modellingTexturing">Modelling and Texturing</a></li>
+                                <li><a href="fruitmodding.html#basicCode">Basic code</a></li>
+                                <li><a href="fruitmodding.html#textureFile">Making the texture file</a></li>
+                                <li><a href="fruitmodding.html#finalizing">Finalizing and Testing</a></li>
+                                <li><a href="fruitmodding.html#troubleshooting">Troubleshooting</a></li>
+                            </ul>
+                        </p>
+                    </ol>
+                </p></div>
+        </div>
+    </div>
+</body>
+</html>

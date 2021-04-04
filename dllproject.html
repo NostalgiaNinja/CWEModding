@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CWE Modding docuimentation: Creating a DLL project</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <link href="styles.css" rel="stylesheet">
+    <link rel="stylesheet" href="dark-mode-switch/dark-mode.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+   
+    <!-- Credit to coiff for the Dark Mode Switch https://github.com/coliff/dark-mode-switch -->
+
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-sm fixed-top bg-light">
+        <div class="container">
+        <span class="navbar-brand" href="#">Chao World Extended Modding Documentation</span>
+        <button class="navbar-toggler" data-target="#Main-Nav" data-toggle="collapse" aria-controls="Main-Nav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+                <div id="Main-Nav" class="collapse navbar-collapse">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html">Home</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                              Topics
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                              <li><a class="dropdown-item active" href="dllproject.html"><b>Making a DLL Mod</b></a></li>
+                              <li><a class="dropdown-item" href="hatmodding.html">Hat Modding</a></li>
+                              <li><a class="dropdown-item" href="fruitmodding.html">Fruit Modding</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <div class="form-check form-switch">
+                    <input id="darkSwitch" class="form-check-input" type="checkbox" >
+                    <label for="darkSwitch" class="form-control-label">Theme</label>
+                </div>
+                <script src="dark-mode-switch/dark-mode-switch.min.js"></script> 
+        </div>
+    </nav>
+
+    <div class="container">
+        <div id="margin"></div>
+
+        <div class="row">
+            <div class="col-lg-auto">        
+                <h1>Creating a DLL project</h1>
+    
+                <p>In order to get started on making either of the mods, you will need to create a DLL project for the mod to work in Sonic Adventure 2.</p>
+            
+                <h2 id="prereqs">Pre-requisites:</h2>
+            
+                <ul>
+                    <li>SA2 Modloader</li>
+                    <li><a href="https://github.com/sonicretro/sa_tools">SA Tools</a></li>
+                    <li>Visual Studio (We will be using 2019 community edition for this) with "Deskop development with C++" installed.</li>
+                </ul>
+            
+                <p>After the pre-requisites have been installed, we may proceed to making a mod folder, and then setting up the Visual Studio project to start creating the mod.</p>
+            
+                <h2 id="modsetup_SA2ModLoader">Mod Setup method 1: SA2 Modloader</h2>
+            
+                <p>Open the SA2 Modloader and click on the "New Mod" button.</p>
+            
+                <img src="assets/Modloder-newmod.png" alt="Click the New Mod button">
+        
+                <p>Fill in the <b>Name, Author, Version </b>and <b>Description</b> of the mod. Do not check the checkboxes in the "save redirect" section.</p>
+        
+                <img src="assets/Modloader-newmodscreen.png" alt="New Mod dialog, with name, author, version, and description fields to fill.">
+        
+                <p>Once done, your mod should appear in the modloader.</p>
+        
+                <img src="assets/Modloader-modcreated.png" alt="Congratulations! your mod has been created!">
+        
+                <p>A note for this method: It excludes a property in the mod.ini file which will be needed (and added) later when the project is complete.</p>
+        
+                <h2 id="modsetup_SATools">Mod Setup method 2: SA Tools</h2>
+        
+                <p>This method is not recommended as it extracts the whole contents of Sonic Adventure 2 for modification, but is provided for the purposes of creating a mod which can be sorted in SA Tools. This will still be needed if you are making a hat mod as we will be extracting a model for later use.  If you are making a fruit mod, you can skip this step. </p>
+        
+                <p>Once SA Tools has been extracted, go to ProjectManager and run the ProjectManager.exe - This should open the Project Manager.  Click the "New Project" button to start the mod creation process.</p>
+        
+                <img src="assets/SaTools-ProjectManagerMain.png" alt="Project Manager main screen">
+        
+                <p>Select the GameType as SA2 PC and fill out your <b>project name, author</b> and <b>description</b>. Click "Create." SA Tools will then create a project folder in your Sonic Adventure 2 folder for you.</p>
+        
+                <img src="assets/SaTools-ProjectManagerNewProject.png" alt="Project Manager New Project screen">
+        
+                <p>When the mod is completed, you can use the "Auto Build" button to create a mod in the "mods" folder in Sonic Adventure 2. Opening the project folder will take you to the SA2 Projects folder where you will see the mod.ini file, which has the minimal for a mod required to run.</p>
+        
+                <h2 id="modsetup_Manual">Mod Setup method 3: Manual method.</h2>
+        
+                <p>This method is the simplest method to create a mod, since there are no tools required to create a folder.</p>
+        
+                <p>Go to your Sonic Adventure 2/Mods folder, right click and go to New->Folder. Name the folder the name of the mod.</p>
+        
+                <img src="assets/ManualMethod-NewFolder.png" alt="Create a new folder in your \'mods\' folder">
+        
+                <p>Inside the folder you just created, right click and go to New->Text Document. rename the text document "mod.ini" - You may need to check the "Show file name extensions" in the view ribbon to see the extension show up. open the new "mod.ini" file.</p>
+        
+                <p>Inside, you will need to write the following code to get started:</p>
+                <pre>
+                Name=
+                Author=
+                Version=1.0
+                Description=
+                DLLFile=
+                </pre>
+                <p>Fill out the details that you need (leave DLLFile alone for now, since that will be needed for the end of the modding process.) and save the file.  Congratulations! You've made a mod.</p>
+        
+                <h2 id="VS-Project">Setting Up the Visual Studio Project:</h2>
+        
+                <p>Credit goes to Kells for setup of the environment - <a href="https://github.com/kellsnc/sa2b-modding-guide/">Guide</a></p>
+        
+                <p>Open Visual Studio 2019 and click the "Create a new project" button on the right.</p>
+        
+                <img src="assets/VS-StartScreen.png" alt="Visual Studio start screen - Create a new Project">
+        
+                <p>Select "C++" as project type and select "Dynamic Link Library(DLL)"</p>
+        
+                <img src="assets/VS-DLLProject.png" alt="Dynamic Link Library selected.">
+        
+                <p>Name your project, and place it in a memorable location.  In my case, I used "C:\dev\ExampleCWEProject" but you can place it anywhere you like, provided you can get to it easily.</p>
+        
+                <img src="assets/VS-NameDLLProject.png" alt="Naming the DLL Project">
+        
+                <p>Once the project has been named, click "create" and let Visual Studio create the project for you.</p>
+        
+                <h2 id="modloader-includes">Setup Modloader includes.</h2>
+        
+                <p>Open the "Programming" folder that was shipped with SA2 Modloader and copy all the files inside to your Visual Studio project folder. Your VS Project folder should look like the following:</p>
+        
+                <img src="assets/ProjectSetup-CopiedFiles.png" alt="Copied files to the CWE project folder.">
+        
+                <p>Either go to Project->Build Solution, or press F6 to build the project.  If the status bar says "Build succeeded", then you're good to go, otherwise if you have problems, then make sure that:</p>
+        
+                <p>
+                    <ul>
+                        <li>You are in an x86 build configuration</li>
+                        <li>You installed the "Desktop Development with C++" Visual Studio module</li>
+                        <li>That in the properties of the project (Project -> Properties) you are using a valid SDK and Toolset</li>
+                    </ul>
+                    <img src="assets/ProjectSetup-CheckSDKAndToolset.png" alt="Check if your toolset and SDK are valid. If these settings are not correct, then you will run into an error.">
+                </p>
+        
+                <p>We are now done setting up the DLL project to get started with the modding project of your choice! Go <a href="index.html">back</a> to the home page and pick either fruit or hat modding to continue.</p></div>
+        </div>
+        <div class="col-md bg-dark text-light">
+            
+        </div>
+
+   </div>
+   <div id="margin"></div>
+
+</body>
+</html>
