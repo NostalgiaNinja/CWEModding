@@ -18,3 +18,8 @@
 [data-theme="dark"] code {
   color: #fe739c;
 }
+
+[data-theme="dark"] .table {
+  background-color:#333 !important;
+  color: #eee !important;
+}
