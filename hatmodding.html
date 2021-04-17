@@ -68,6 +68,10 @@
                     <li>patience</li>
                 </ul>
 
+                <div class="alert alert-info" role="alert">
+                    <b>HEADS UP!</b> The code for this section is currently being rewritten. If you find an issue with the code, please let me know and I'll fix it up as soon as I can!
+                </div>
+
                 <h2 id="preparations">Preparations to make:</h2>
 
                 <p class="lead">Hat mods provide the basic groundwork to give your Chao a custom hat without modifying already existing hats. We will create a model, assign the model to the Chao Black Market, and give the hat personality by giving it a price, and descriptions that show up on the Black Market menu page.</p>
@@ -96,6 +100,10 @@
 
                 <img class="img-fluid" src="assets/Blender-SelectChildOf.png" alt="Selecting the child object with the exact object type.">
 
+		        <p>Clear Inverse on the hat, before fitting the hat onto the Chao.</p>
+
+        		<img class="img=fluid" src="assets/Blender-Clear-Inverse.png" alt="Clear inverse button">
+
                 <p>Fit the hat onto the Chao, making sure that there aren't any parts of the Chao's head showing while the hat is on. Note that because hats are not "One size fits all" you may want to have a look at how it looks on other Chao once the mod is done to make sure it fits the best on the Chao you want to give the hat to.</p>
 
                 <img class="img-fluid" src="assets/Blender-Hat-fitting.png" alt="Fitting the hat onto the Chao.">
@@ -118,6 +126,8 @@
 
                 <img class="img-fluid" src="assets/Blender-SAToolsProperties.png" alt="Set the Texture ID to 0 for first hats, increase by 1 thereafter">
 
+                <p></p>
+
                 <p>Go to the UV editing tab, select all of your hat's vertices (A), and UV map it (either by pressing U, selecting Smart UV Project or by clicking UV, Smart UV Project)</p>
 
                 <img class="img-fluid" src="assets/Blender-UVProject.png" alt="Click UV, and Smart UV Project your hat.">
@@ -132,25 +142,44 @@
 
                 <h2 id="basicCode">Basic code</h2>
 
+                <div class="alert alert-danger" role="alert">
+                    If you have an older version of this code, please update it before following these steps!
+                </div>
+
                 <p>Open your VS project folder and download and extract the archive for the API code <a href="https://github.com/NostalgiaNinja/CWEHats/archive/main.zip">here</a> into the project folder.  This will include the base code, as well as any additional dependencies outside of the SA2 Programming code required to make the project complete. Add the Main.cpp file to your project and open it. Look at the following code:</p>
 
                 <pre><code>
-                    void CWELoad()
-                    {
-                
-                        //ChaoTexlistLoad - "Filename" - Do NOT conflict with other hat or fruit mods.
-                        RegisterChaoTexlistLoad("ExampleHats", &texlist_HATS);
-                
-                        EasyRegisterHat("filename.sa2mdl", 100, 100, "Name", "Description");
-                    }
+{
+    //ChaoTexlistLoad - "Filename" - Do NOT conflict with other hat or fruit mods. - make sure your UIDs are unique!
+    RegisterChaoTexlistLoad("ExampleHats", &texlist_HATS);
+
+    //EasyRegisterHat - "Filename", Price, Sale, "Name", "Description", - Place hat models in the root folder of the mod folder.
+    EasyRegisterHat("filename.sa2mdl", 100, 100, "Name", "Description");
+
+    //EasyRegisterAccessory - "Filename", buy, sell, "Name", "Description", EAccessoryType (see enum above) - Adding a documentation example
+    EasyRegisterAccessory("filename.sa2mdl",100,100,"Name","Description",Head);
+}
                 </code></pre>
 
                 <p><code>RegisterChaoTexlistLoad</code> defines the name of your texture file (in this case it's ExampleHats.pak, change it so that it doesn't mess with any other hat mods.)</p>
+
+                <p>You will now need to make a choice on what your hat will be: Will it be considered as a vanilla hat (which removes the head of the Chao) or will it be considered an "Accessory" by CWE (which doesn't remove the head of the Chao)</p>
 
                 <p>The <code>EasyRegisterHat</code> function gives you access to register your hat we made in the previous section. You can add as many hats as you like using this line of code, limited to 255 hats.  Note that other hat mods share this limit, and if you do reach the limit, the game will crash when trying to load one of the hats in the Black Market.</p>
 
                 <p>The syntax for the <code>EasyRegisterHat</code> function is as follows: <code>EasyRegisterHat("filename",buy price, sell price, "Name of hat", "Description for Black Market"); </code></p>
 
+                <p>The <code>EasyRegisterAccessory</code> function gives you access to register your accessory in the previous section. Note that the same applies with the hats, as there is a limit of 255 hats and accessories.</p>
+
+                <p>The syntax for the <code>EasyRegisterAccessory</code> function is as follows: <code>EasyRegisterAccessory("Filename",buy price, sell price, "Name of accessory", "Description for Black Market", EAccessoryType);</code></p>
+               
+                <div class="card" style="width: 40rem">
+                    <div class="card-body">
+                        <h5 class="card-title">What is EAccessoryType?</h5>
+                        <p class="card-text">EAccessoryType allows us to create customized models based off of rigs. There will be an advanced section for people who want to create such models in the future. For now, you can either use <code>Head</code> or <code>Face</code> for the accessory you want to make.</p>
+                    </div>
+                </div>
+                
                 <p>Drag and drop the ModelInfo.h and ModelInfo.cpp files into the "Source Files" folder in your Solution explorer. (These dependencies generally throw linker errors if not added this way for me, so let me know if this is an issue for you)</p>
                 
                 <img class="img-fluid" src="assets/VS-DragDropDependencies.png" alt="Drag and drop the dependencies to your project folder">
@@ -210,12 +239,16 @@
 
             	<h3>My game crashes when I'm in the Black Market!</h3>
 
-            	<p>This is caused by three issues:</p>
+            	<p>This is caused by four issues:</p>
             	<ul>
+                    <li>Array size - Check that your <code>NJS_Texname</code> in the code has enough space to hold the amount of textures you have in your mod. Having the array size be smaller than the amount of textures in your mod causes the game to crash. </li>
             		<li>Model issues - This is mainly caused by extra empties found in the SA2MDL model. This happens when your camera or point lamp has not been removed, causing your model to crash the game.  Remove the camera and point empties, export your SA2MDL and try again.</li>
             		<li>Texture issues - If your texture file is not in the right location (gd_PC/PRS) then the game cannot find the file that it is looking for, throwing a "file not found" exception and crashing. Place your texture file in the right place, and try again</li>
             		<li>Forgetting to delete the Chao Model after you are done with making the hat. Delete the Chao model hierarchy, save, and try again.</li>
             	</ul>
+
+                <h3>My hat isn't where I placed it!</h3>
+                <p>Make sure to "Clear Inverse" on the object constraint, move the hat back onto the Chao, and try again.</p>
 
             	<h3>My texture doesn't look right!</h3>
             	<p>Make sure your texture is correctly assigned to the model in Blender, and make sure that in TextureEditor your texture has a unique value in the Global Index field.</p>

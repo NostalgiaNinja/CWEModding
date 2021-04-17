@@ -23,3 +23,20 @@
   background-color:#333 !important;
   color: #eee !important;
 }
+
+[data-theme="dark"] .card {
+  background-color: #333 !important;
+  color: #eee !important;
+  border:none;
+}
+
+[data-theme="dark"] .card-title {
+  background-color: #333 !important;
+  color: #eee !important;
+}
+
+[data-theme="dark"] .card-body {
+  background-color: #111 !important;
+  color: #eee !important;
+}
+
