@@ -44,6 +44,8 @@
   color: #eee !important;
 }
 
-[data-theme="dark"] .btn-primary{
+
+[data-theme="dark"] .btn-primary:link, .btn-primary:visited{
   color:#eee !important;
 }
+
