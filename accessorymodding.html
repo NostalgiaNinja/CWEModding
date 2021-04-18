@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accessory Modding</title>
+
+    <!-- Include Bootstrap - Just so that we have a basic framework to make things look pretty. -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <link href="styles.css" rel="stylesheet">
+    <link rel="stylesheet" href="dark-mode-switch/dark-mode.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+   
+    <!-- Credit to coiff for the Dark Mode Switch https://github.com/coliff/dark-mode-switch -->
+
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-sm fixed-top bg-light">
+        <div class="container">
+        <span class="navbar-brand" href="#">Chao World Extended Modding Documentation</span>
+        <button class="navbar-toggler" data-target="#Main-Nav" data-toggle="collapse" aria-controls="Main-Nav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+                <div id="Main-Nav" class="collapse navbar-collapse">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#"><b>Home </b></a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                              Topics
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                              <li><a class="dropdown-item" href="dllproject.html">Making a DLL Mod</a></li>
+                              <li><a class="dropdown-item" href="hatmodding.html">Hat Modding</a></li>
+                              <li><a class="dropdown-item" href="fruitmodding.html">Fruit Modding</a></li>
+                              <li><a class="dropdown-item active" href="accessorymodding.html"><b>Advanced: Full Body Accessory Modding</b></a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <div class="form-check form-switch">
+                    <input id="darkSwitch" class="form-check-input" type="checkbox" >
+                    <label for="darkSwitch" class="form-control-label">Theme</label>
+                </div>
+                <script src="dark-mode-switch/dark-mode-switch.min.js"></script> 
+        </div>
+    </nav>
+
+    <div class="container">
+        <div id="margin"></div>
+        
+        <div class="row">
+            <div class="col-xl">
+                <div class="alert alert-warning" role="alert">
+                    <b>Warning:</b> This is an advanced topic. The guide will walk you through the process, but do not expect help for how to do it. Use online resources when you can!
+                </div>
+
+                <div class="alert alert-danger" role="alert">
+                    <b>this API content is not yet released. Full body accessory support is coming in CWE 9.3. Your mod may not work or crash if you do this early!</b>
+                </div>
+
+                <h1>Accessory Modding</h1>
+
+                <p class="lead">If you want to take your hat and accessory modding to the next level, this would be the best way to do it. This will allow you to parent your accessory to the Chao itself, giving you the chance to make clothing, or trinkets for your Chao.</p>
+
+                <h2 id="prereqs">Prerequisites:</h2>
+
+                <ul>
+                    <li>the latest version of the <a href="https://github.com/NostalgiaNinja/CWEHats/archive/main.zip/">hats code</a></li>
+                    <li>Have completed and made at least one hat on your own (with the code from v1.1.1)</li>
+                    <li>all the previous prerequisites listed in the hat modding section of this guide</li>
+                    <li>Advanced 3D knowledge (rigging, weight painting)</li>
+                </ul>
+
+                <h2 id="preparations">Preparations:</h2>
+
+                    <p>All the preparations should be set up from the hat section, however to be sure, make sure you have the following:</p>
+
+                    <ul>
+                        <li>An SA Tools project for extracted Chao types</li>
+                        <li>the latest version of <a href="https://github.com/NostalgiaNinja/CWEHats/archive/main.zip/">the hats code</a></li>
+                        <li>an accessory to put onto the Chao (or a premade asset if you're learning)</li>
+                    </ul>
+                
+
+                <h2 id="rig-setup">Setting up the rig for the accessory:</h2>
+
+                <div class="alert alert-info" role="alert">
+                    <b>Heads up: Because we are rigging the Chao, do not set an object constraint to the Chao. It's unnecessary when you are basically rigging the Chao to look the way you want it to.</b>
+                </div>
+
+                <p>Import a Chao model from your AL_RootObject directory, keeping in mind what type you want to optimize the accessory for. For this example, I'll use Import_45 (Hero Swim/Fly).</p>
+
+                <p>Select your Chao's root empty object (the 000_object empty at the top of the hierarchy), and in the tools panel look for "Armature from Objects." Click OK on the context menu that pops up. This will create a duplicate of your Chao, with Blender ready bones that can be rigged.  Delete the imported Chao afterwards.</p>
+
+                <img src="assets/Blender-ArmatureFromObjects.png" alt="Armature from Objects, selected (in bright blue)">
+                <img src="assets/Blender-ArmatureFromObjectsContext.png" alt="Context menu that pops up">
+
+                <p>From here, create the model that you want to see on your Chao, minding for clipping on the Chao. I made a necklace for example. You can use multiple meshes as an example, but be sure to parent them all when you get to the rigging stage</p>
+
+                <img src="assets/Blender-MakeAccessory.png" alt="The completed accessory">
+
+                <p>Select the body part you want to constrain the accessory to.  Here for example, I'll select the stomach. In the "Object Data properties, look for the vertex group that was set up from the Armature from Objects tool. We will need its name for the accessory rig.</p>
+
+                <img src="assets/Blender-VertexGroup.png" alt="The vertex group on the stomach">
+
+                <p>Copy the vertex group name, and create new vertex groups for your accessories with that name.</p>
+
+                <img src="assets/Blender-CopyVertexGroupName.png" alt="The vertex names should be the same for the game to pick it up.">
+
+                <p>Select the bone with the same prefix - If you have a 001 for stomach, look through the armature for 001.  Select that bone, then select your object to parent, and then select the armature. Do them one at a time to make sure that they parent correctly. The rounded square indicates the selected bone in the View Layer, and should give you a contextual hint to what your object will be parented to.  Make note of this!</p>
+
+                <img src="assets/Blender-SelectingforRigging.png" alt="Selecting objects for rigging. Below, a rounded rectangle indicates the selected bone for parenting.">
+
+                <p>Press ctrl+P to open the parenting menu, or go to Object -> Parent -> Bone in the objects menu. The object should now be parented to the bone. Repeat the above steps for the other objects you want to parent to the Chao. </p>
+
+                <img src="assets/Blender-ParentToBone.png" alt="Parenting to the Bone on the armature.">
+
+                <p>to test if the parenting was successful, select the armature, and press ctrl+tab to go into Pose Mode, and rotate or move your Chao model around to see if the objects you parented to bone have parented correctly. cancel the operation by pressing the Escape key, and exit pose mode for the next step.</p>
+
+                <p>if your parented object is moving according to the part you parented, but deforming, then go to the object having issues, go to edit mode, and select all. go back into the Object Data tab in properties, and click the "Assign" button.  This will assign a weight paint of 1.00 to the whole object, therefore preventing any deformation from happening when transformed. this can be checked in Weight Paint mode, where the object will appear as red if the value is 1.00, or blue if the value is 0.00</p>
+
+                <img src="assets/Blender-AssignVertexWeight.png" alt="Assign the vertex weight to the model.">
+
+                <p>Now that the accessory has been set up for rigging, delete the meshes that were created by the "Armature from Objects" operation. They aren't needed for the export. </p>
+
+                <img src="assets/Blender-DeleteArmaturedMeshes.png" alt="Delete the armatured meshes from the model."> 
+
+                <p>Follow the steps for texturing, and once all ready, export the model</p>
+
+                <h2 id="code">Code:</h2>
+
+                <p class="lead">We will be using the same code from the hat guide. Make sure to have updated your code to the latest version if you haven't! this code will not work if you have not updated!</p>
+
+                <p>Open your Visual Studio Project and go to your main.cpp file. Look for the example <code>EasyRegisterAccessory</code> and modify that, making sure to follow the function prototype.  Here, you can add an <code>EAccessoryType</code> of <code>Generic1</code> or <code>Generic2</code> so that your accessory will be attached to the right location. Build, and complete the process as per Hat modding guide. This code is subject to change, so be sure to check and update the code as appropriate, as new functionality will be added soon!</p>
+
+                <pre><code>
+    //ChaoTexlistLoad - "Filename" - Do NOT conflict with other hat or fruit mods. - make sure your UIDs are unique!
+    RegisterChaoTexlistLoad("ExampleAccessories", &texlist_HATS);
+
+    //EasyRegisterAccessory - "Filename", buy, sell, "Name", "Description", EAccessoryType (see enum above) - Adding a documentation example
+    EasyRegisterAccessory("ExampleAccessory.sa2mdl",100,100,"Example name","Example description",Generic1);
+                </code></pre>
+
+            </div>
+        </div>
+    </div>
+</body>
+</html>
