@@ -44,3 +44,6 @@
   color: #eee !important;
 }
 
+[data-theme="dark"] .btn-primary{
+  color:#eee !important;
+}
