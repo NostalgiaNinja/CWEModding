@@ -36,6 +36,7 @@
                               <li><a class="dropdown-item active" href="hatmodding.html"><b>Hat Modding</b></a></li>
                               <li><a class="dropdown-item" href="fruitmodding.html">Fruit Modding</a></li>
                               <li><a class="dropdown-item" href="accessorymodding.html">Advanced: Full Body Accessory Modding</a></li>
+                              <li><a class="dropdown-item" href="animals.html">Advanced: Animal Modding</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -79,7 +80,7 @@
 
                 <p>If you haven't downloaded SA Tools, do so now and create a project for the purpose of this mod. We won't use the project for building the mod, but we will use the project to rip the assets we need to get the Chao model for fitting the hat on the head.</p>
 
-                <p>Once you're done, open up Blender, delete the default cube and select file -> Import -> Sonic Adv. Model (.*mdl), and find the Project\Data_DLL\AL_RootObject in your Sonic Adventure 2 Projects folder. Select 0.sa2mdl and click import.</p>
+                <p>Once you're done, open up Blender, delete the default cube and select file -> Import -> Sonic Adv. Model (.*mdl), and find the Project\Data_DLL\AL_RootObject in your Sonic Adventure 2 Projects folder. Select Child Neutral Base.sa2mdl and click import.</p>
 
                 <img class="img-fluid" src="assets/Blender-SAMDLImport.png" alt="Importing the SA Model format.">
 
@@ -258,8 +259,8 @@
             	<h3>My hat doesn't sit on my Chao's head right!</h3>
             	<p>Reimport the Chao model, add an object constraint to the Chao's head, adjust to the needs of the Chao, delete the Chao (do not delete the object constraint), export and try again.</p>
         
-            	<h3>My hat crashes with other hat mods!</h3>
-            	<p>You've somehow reached the shared Black Market limit of 255 items of the hat type. Remove some mods and try again.</p>
+            	<h3>My hat doesn't show up!</h3>
+            	<p>You've somehow reached the shared Black Market limit of 128 items of the hat type. If you look at the Console View (enable this in the SA2 Mod Manager), CWE will tell you which hats have not loaded due to too many hats being loaded at this point in time.  A future version of CWE will fix this.</p>
 
             	<h3>My Hats changed when I changed my mod order. Why?</h3>
             	<p>This is because hats, and fruit mods have order priority over each other. IDs are sorted from the top of the modloader list to the bottom, so changing mod loader order changes what hats Chao may have, as well as the order they appear in when loading Black Market.  This can also be useful for testing if your hat is loaded correctly.</p>

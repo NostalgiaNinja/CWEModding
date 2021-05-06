@@ -26,7 +26,7 @@
                 <div id="Main-Nav" class="collapse navbar-collapse">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="#"><b>Home </b></a>
+                            <a class="nav-link" href="index.html"><b>Home </b></a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -37,6 +37,7 @@
                               <li><a class="dropdown-item" href="hatmodding.html">Hat Modding</a></li>
                               <li><a class="dropdown-item" href="fruitmodding.html">Fruit Modding</a></li>
                               <li><a class="dropdown-item active" href="accessorymodding.html"><b>Advanced: Full Body Accessory Modding</b></a></li>
+                              <li><a class="dropdown-item" href="animals.html">Advanced: Animal Modding</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -56,10 +57,6 @@
             <div class="col-xl">
                 <div class="alert alert-warning" role="alert">
                     <b>Warning:</b> This is an advanced topic. The guide will walk you through the process, but do not expect help for how to do it. Use online resources when you can!
-                </div>
-
-                <div class="alert alert-danger" role="alert">
-                    <b>this API content is not yet released. Full body accessory support is coming in CWE 9.3. Your mod may not work or crash if you do this early!</b>
                 </div>
 
                 <h1>Accessory Modding</h1>
@@ -92,7 +89,7 @@
                     <b>Heads up: Because we are rigging the Chao, do not set an object constraint to the Chao. It's unnecessary when you are basically rigging the Chao to look the way you want it to.</b>
                 </div>
 
-                <p>Import a Chao model from your AL_RootObject directory, keeping in mind what type you want to optimize the accessory for. For this example, I'll use Import_45 (Hero Swim/Fly).</p>
+                <p>Import a Chao model from your AL_RootObject directory, keeping in mind what type you want to optimize the accessory for. For this example, I'll use Hero Swim Fly.</p>
 
                 <p>Select your Chao's root empty object (the 000_object empty at the top of the hierarchy), and in the tools panel look for "Armature from Objects." Click OK on the context menu that pops up. This will create a duplicate of your Chao, with Blender ready bones that can be rigged.  Delete the imported Chao afterwards.</p>
 
