@@ -244,6 +244,7 @@
                 </code>
 
                 <p>where &[AnimalEntry] is a reference to the <code>CWE_MINIMAL</code> that was exported, [FruitID] is the ID of the fruit you created to spawn animals, [AnimalID] is the ID you created for your animal, [chanceMin] is a number from 0-100 for a minimal percentage chance, and [chanceMax] is a number from 0-100 for a maximum percentage chance.</p>
+				<p>Note: If the ranges don't add up to 100%, SADX seals will spawn the remainder of the time. For instance, if a fruit has two animals that can spawn from it, one with spawn chance 0 - 25, and one with spawn chance 75 - 100, SADX seals will fill the remaining 25 - 75, spawning 50% of the time.</p>
 
                 <p>Build the DLL for the mod, and finalize the process as you usually would for Fruit.  Don't forget to add your animal texture to the mod!</p>
             </div>
