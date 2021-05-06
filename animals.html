@@ -216,10 +216,6 @@
 
                 <h2 id="code">Code:</h2>
 
-                <div class="alert alert-primary" role="alert">
-                    Heads up: The way the guide does this is not optimal, and will create a large main.cpp file. If this can be optimized please let me know. This is one way to write the code, but there are many ways to include your animal code into your project. Feel free to experiment with different methods if this does not work for you.
-                </div>
-
                 <p>Have a project with fruit ready, and import the <code> CWE_PARTS, CWE_MINITYPE </code> and <code>CWE_MINIMAL</code> structs from the Animals Main.cpp file you downloaded in this section of the guide. Place it after the "ItemChance" struct so that the struct can be found when the animal code gets added.</p>
 
                 <p>Add the following function prototypes to the list of already available function prototypes:</p>
@@ -236,16 +232,11 @@
 	RegisterDataFunc = (void (*)(void* ptr))GetProcAddress(h, "RegisterDataFunc");
                 </code></pre>
 
-                <p>below the structs that you copied, add the following lines to your code to create a code-folding section in Visual Studio. This only works in Visual Studio and Visual Studio Code, and is not standard C++ practice. This will not change your code any, but it will make it neater and easier to navigate when your code becomes thousands of lines long after copying the animal .mini file in here.</p>
+                <p>Copy your .mini file into your project folder and below the structs you added, #include your .mini file.  For example:</p>
 
                 <pre><code>
-    #pragma region [AnimalName]        
-    #pragma endregion        
+    #include "crab.mini"
                 </code></pre>
-
-                <p>where [AnimalName] is your animal's name.</p>
-
-                <p>Open the .mini file in a text editor and select all, copy the code in between the region code.</p>
 
                 Inside <code>CWELoad()</code>, create an ID for your animal (for example: <code>int CrabID</code>) and then pass it into the following code:
 
