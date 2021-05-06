@@ -224,8 +224,8 @@
                 <p>Add the following declarations below the <code>HMODULE h = GetModuleHandle(L"CWE");</code> line of code:</p>
 
                 <pre><code>
-	RegisterChaoFruit = (int (*)(NJS_OBJECT * model, NJS_TEXLIST * texlist, ChaoItemStats * stats, void* attrib, void* Func, const char*, const char*)) GetProcAddress(h, "RegisterChaoFruit");
-	RegisterDataFunc = (void (*)(void* ptr))GetProcAddress(h, "RegisterDataFunc");
+	RegisterChaoMinimal = (int (*)(CWE_MINIMAL * minimal_entry))GetProcAddress(h, "RegisterChaoMinimal");
+	RegisterChaoMinimalFruit = (void (*)(int fruitID, int minimalID, int, int)) GetProcAddress(h, "RegisterChaoMinimalFruit");
                 </code></pre>
 
                 <p>Copy your .mini file into your project folder and below the structs you added, #include your .mini file.  For example:</p>
