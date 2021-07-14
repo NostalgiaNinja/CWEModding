@@ -111,6 +111,13 @@
                 
                 <h2 id="basicCode">Basic Code</h2>
 
+                <div class="alert alert-danger" role="alert">
+                    Warning: Chao World Extended 9.4 is about to release and parts of this code will be deprecated! If you already have the current EasyRegisterFruit zip file, continue until 9.4 releases, and when 9.4 releases, redownload the EasyRegisterFruit zip file and adjust your main.cpp to the current format.
+                </div>
+
+                <h3>&lt;= version 9.3</h3>
+                <hr>
+
                 <p>Open your VS project folder and download and extract the archive for the API code <a href="https://github.com/NostalgiaNinja/DCFruits/archive/EasyRegisterFruit.zip">here</a> into the project folder.  This will include the base code, as well as any additional dependencies outside of the SA2 Programming code required to make the project complete. Add the Main.cpp file to your project and open it. There are a few things we will need to cover for fruit before we can add them to the Black Market themselves.</p>
 
                 <h3>Initialize the fruit ID</h3>
@@ -169,6 +176,81 @@
                 <p>Create an instance for ItemChance for your Fruit. This gives the fruit a chance to spawn in the Black Market.  50% is the default in DCFruits mod, so I usually go for that.</p>
 
                 <p>finally, choose where you want to register the fruit.  <code>RegisterBlackMarketGeneralFruit</code> places the fruit where the shaped fruit usually is, while <code>RegisterBlackMarketRareFruit</code> places the fruit where Hyper Fruit, Mint Candy, and mushrooms would spawn. Don't forget to assign the <b>address of</b> (& operator with the variable name) the chance of the fruit you are making, otherwise this will not work and throw an error on compile!</p>
+
+                <p>Drag and drop the ModelInfo.h and ModelInfo.cpp files into the "Source Files" folder in your Solution explorer. (These dependencies generally throw linker errors if not added this way for me, so let me know if this is an issue for you)</p>
+
+                <img class="img-fluid" src="assets/VS-DragDropDependencies.png" alt="Drag and drop the dependencies to your project folder">
+
+                <p>Click the build configuration dropdown and select "Release" and select from the solution platform "x86", then build your project by pressing F6 or going to "Build -> Build Project. If all goes well, the build should be completed and a "Release" folder should appear in your project folder with the project name DLL inside. </p>
+
+                <h3>>= version 9.4</h3>
+                <hr>
+
+                <div class="alert alert-warning" role="alert">
+                    This content is unreleased and will take parts from the &lt;= 9.3 section - Update your code before 9.4 to be ready for when 9.4 releases!
+                </div>
+
+                <p>Open your VS project folder and download and extract the archive for the API code <a href="https://github.com/NostalgiaNinja/DCFruits/archive/EasyRegisterFruit.zip">here</a> into the project folder.  This will include the base code, as well as any additional dependencies outside of the SA2 Programming code required to make the project complete. Add the Main.cpp file to your project and open it. There are a few things we will need to cover for fruit before we can add them to the Black Market themselves.</p>
+
+                <h3>Initialize the fruit ID</h3>
+                <pre><code>
+                    int ExampleFruitID;
+                </code></pre>
+
+                <p>This provides the fruit with an ID to the custom fruit API in CWE.</p>
+
+                <h3>Create a custom function for the fruit</h3>
+
+                <pre><code>
+                    void __cdecl CustomFruitFunc(ChaoData* data, ObjectMaster* fruit)
+                    {
+
+                    }
+                </code></pre>
+
+                <p>Note: This needs to be created for custom functionality, but if you don't add the function you can insert <code>NULL</code> in the Function parameter instead of using a CustomFruitFunc. NULLing the parameter means that only the stats will be given, and nothing else.</p>
+
+                <p>This is where the last bite of the Chao Fruit would change attributes, like personality, behavior, or emotions. You'll find the attributes in <code>data->data</code>. Be sure to manually clamp the values in these functions.  Use the <a href="https://github.com/Exant64/DCFruits/blob/master/main.cpp">DCFruits</a> source to see how clamping was done there. When the CWE API allows for it, this will update to functions that handle this for you.</p>
+
+                <h3>Create a stats struct instance</h3>
+
+                <pre><code>ChaoItemStats ExampleStats = { 0,0,0,0,0,0,0,0,0,0 }</code></pre>
+
+                <p>This creates the stats for the Chao, and divides the stats according to the bites the Chao takes. Note the comment next to the example code which tells you what the order of operations is.</p>
+
+                <h3>Add the CWE fruit</h3>
+
+                <p>Go to the CWELoad() function, and have a look at the following:</p>
+
+                <pre><code>
+                    void CWELoad()
+                    {
+                        //Texture list - Change the name for making different custom textures.
+                        RegisterChaoTexlistLoad("examplefruit", &texlist_CUSTOMFRUIT);
+                
+                        //Register the fruit ID to the fruit list - should start at 34 before DCFruits gets initialized, or 36 after.
+                        PearFruitID = RegisterFruit("pear.sa2mdl", 1000, 250, PearFruitStats, PearFruitFunc, "Example Fruit", "Example fruit description");
+                
+                        //Register the fruit (ID, Chance in %)
+                        RegisterBlackMarketGeneralFruit(PearFruitID, 50);
+                    }
+                </code></pre>
+
+                <p><b>If you were coming from version 9.3:</b> Remove the ItemChance variable, and change your <code>RegisterBlackMarketGeneralFruit</code> or <code>RegisterBlackMarketRareFruit</code> to contain the fruit ID, and the percentage chance directly into the function call. This means that the new <code>main.cpp</code> has the ItemChance percentage removed.</p>
+
+                <p><code>RegisterChaoTexlistLoad</code> defines the name of your texture file (in this case it's examplefruit.pak, change it so it doesn't mess with any other fruit mods.)</p>
+
+                <p>the <code>RegisterFruit</code> function gives you access to register your fruit we made in the previous section.  You can add as many fruit as you like using this line of code, limited to 255 fruit.  Note that other fruit mods share this limit, and if you do reach the limit, the game will rash when trying to load one of the fruit in the Black Market.</p>
+
+                <p>the syntax for the <code>RegisterFruit</code> is as follows: <code>RegisterFruit("filename",buy price, sell price, the stats struct instance we created above, the custom function we created above, "Name of Fruit", "Description for Black Market");</code></p>
+
+                <p>finally, choose where you want to register the fruit.  <code>RegisterBlackMarketGeneralFruit</code> places the fruit where the shaped fruit usually is, while <code>RegisterBlackMarketRareFruit</code> places the fruit where Hyper Fruit, Mint Candy, and mushrooms would spawn. <b>If you are coming from 9.3, DO NOT add the address of (&) operator to the fruit ID as the structure of the function call has changed.</b></p>
+
+                <p>Depending on what your function for registering the fruit will be, it should look as the following:</p>
+
+                <pre><code>RegisterBlackMarketGeneralFruit(fruitID, chance%);</code></pre>
+
+                <p>where FruitID is the fruit ID variable you made above, and chance% is a number from 0 to 100.</p>
 
                 <p>Drag and drop the ModelInfo.h and ModelInfo.cpp files into the "Source Files" folder in your Solution explorer. (These dependencies generally throw linker errors if not added this way for me, so let me know if this is an issue for you)</p>
 
